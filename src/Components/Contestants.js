@@ -1,25 +1,15 @@
-import React from 'react'
-import ContestantCard from './ContestantCard'
+import React from "react";
+import ContestantCard from "./ContestantCard";
+import { connect } from "react-redux";
 
-export default function Contestants({ contestants, increaseVote, decreaseVote }) {
-
+function Contestants(props) {
   const mapContestants = () => {
-    let contestantArray = Object.values(contestants)
+    let contestantArray = Object.values(props.contestants);
     let contestantCards = contestantArray.map(contestant => {
-      return (< ContestantCard contestant={
-        contestant
-      }
-        increaseVote={
-          increaseVote
-        }
-        decreaseVote={
-          decreaseVote
-        }
-      />
-      )
-    })
-    return contestantCards
-  }
+      return <ContestantCard contestant={contestant} key={contestant.id} />;
+    });
+    return contestantCards;
+  };
 
   return (
     <div>
@@ -27,5 +17,13 @@ export default function Contestants({ contestants, increaseVote, decreaseVote })
         {mapContestants()}
       </div>
     </div>
-  )
+  );
 }
+
+const mapStateToProps = state => {
+  return {
+    contestants: state.contestants
+  };
+};
+
+export default connect(mapStateToProps)(Contestants);
